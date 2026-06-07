@@ -1,0 +1,49 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run Odoo Tests: ${input:moduleName}",
+            "type": "shell",
+            "command": "docker exec odoo19-web odoo -d postgres --db_host=db --db_user=odoo --db_password=odoo --test-tags ${input:moduleName} --stop-after-init --http-port=8070",
+            "problemMatcher": [],
+            "group": "test",
+            "detail": "Run tests for a specific module"
+        },
+        {
+            "label": "Restart Odoo Container",
+            "type": "shell",
+            "command": "docker restart odoo19-web",
+            "problemMatcher": [],
+            "detail": "Restart Odoo web container"
+        },
+        {
+            "label": "View Odoo Logs",
+            "type": "shell",
+            "command": "docker logs -f odoo19-web",
+            "problemMatcher": [],
+            "detail": "Follow Odoo container logs"
+        },
+        {
+            "label": "Install Module: ${input:moduleName}",
+            "type": "shell",
+            "command": "docker exec odoo19-web odoo -d postgres --db_host=db --db_user=odoo --db_password=odoo -i ${input:moduleName} --stop-after-init",
+            "problemMatcher": [],
+            "detail": "Install a specific module"
+        },
+        {
+            "label": "Open Odoo in Browser",
+            "type": "shell",
+            "command": "xdg-open http://localhost:8069",
+            "problemMatcher": [],
+            "detail": "Open Odoo in default browser"
+        }
+    ],
+    "inputs": [
+        {
+            "id": "moduleName",
+            "type": "promptString",
+            "description": "Enter the Odoo module name (e.g., sale_tiktok_link):",
+            "default": "sale_tiktok_link"
+        }
+    ]
+}
